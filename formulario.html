@@ -123,33 +123,21 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const categoryField = document.getElementById("categoria");
-  const empresaField = document.getElementById("empresa");
   const leadTagField = document.getElementById("lead_tag");
 
-  function updateFormFields() {
+  function updateLeadTag() {
     const selected = categoryField.value;
-
-    // Reset visibility
-    especificarField.style.display = "none";
-    empresaField.style.display = "none";
-    licenciaField.style.display = "none";
-
-    // Conditional logic
-    if (selected === "Otros") {
-      especificarField.style.display = "block";
-    } else if (selected === "Broker") {
-      empresaField.style.display = "block";
-      licenciaField.style.display = "block";
-    }
-
-    // Auto-tagging
-    leadTagField.value = selected.toLowerCase();
+    leadTagField.value = selected ? selected.toLowerCase() : "";
   }
 
-  categoryField.addEventListener("change", updateFormFields);
-  updateFormFields(); // Initial run
+  categoryField.addEventListener("change", updateLeadTag);
+  updateLeadTag(); // Run once on page load
+
+  // Ensure tagging before submit
+  document.getElementById("visitor-form").addEventListener("submit", function () {
+    updateLeadTag();
+  });
 });
 </script>
 </body>
-
-</html> # v01
+</html>
