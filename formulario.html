@@ -85,14 +85,14 @@
 
     <label for="comentarios">Comentarios:</label>
     <textarea id="comentarios" name="comentarios" rows="4"></textarea>
-
+    
+    <input type="hidden" id="lead_tag" name="lead_tag" />
+    
 <div id="empresa" style="display:none;">
   <label for="empresa">Empresa:</label>
   <input type="text" name="empresa" />
 </div>
 
-<input type="hidden" id="lead_tag" name="lead_tag" />
-✅ 
     <button type="submit">Enviar</button>
   </form>
 
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
   categoryField.addEventListener("change", updateLeadTag);
   updateLeadTag(); // Run once on page load
 
-  // Ensure tagging before submit
+  // Ensure tagging just before submit
   document.getElementById("visitor-form").addEventListener("submit", function () {
     updateLeadTag();
   });
