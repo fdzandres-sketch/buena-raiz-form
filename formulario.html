@@ -97,6 +97,7 @@
   </form>
 
   <script type="module">
+    console.log("Lead tag value:", data.lead_tag);
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
     const supabaseUrl = 'https://dtrxgnxkicpljqhkuazr.supabase.co'
@@ -121,52 +122,22 @@
     })
   </script>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const categoryField = document.getElementById("categoria");
-  const leadTagField = document.getElementById("lead_tag");
+document.getElementById('visitor-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+  data.timestamp_utc = new Date().toISOString();
 
-  function assignLeadTag() {
-    const selected = categoryField.value.trim().toLowerCase();
+  console.log("Lead tag value:", data.lead_tag); // ✅ Debug line
 
-    let tag = "";
-    switch (selected) {
-      case "prospecto comprador":
-        tag = "comprador";
-        break;
-      case "prospecto vendedor":
-        tag = "vendedor";
-        break;
-      case "prospecto arrendatario":
-        tag = "arrendatario";
-        break;
-      case "prospecto arrendador":
-        tag = "arrendador";
-        break;
-      case "broker":
-        tag = "broker";
-        break;
-      case "notario":
-        tag = "notario";
-        break;
-      case "gestor":
-        tag = "gestor";
-        break;
-      case "otros":
-        tag = "otros";
-        break;
-      default:
-        tag = "sin_categoria";
-    }
-
-    leadTagField.value = tag;
+  const { error } = await supabase.from('visitors').insert([data]);
+  if (error) {
+    alert('❌ Error: ' + error.message);
+  } else {
+    alert('✅ Gracias por tu información!');
+    e.target.reset();
+    window.location.href = 'index.html';
   }
-
-  categoryField.addEventListener("change", assignLeadTag);
-  assignLeadTag(); // Run once on page load
-
-  document.getElementById("visitor-form").addEventListener("submit", function () {
-    assignLeadTag(); // Ensure tagging before submission
-  });
 });
 </script>
 </body>
