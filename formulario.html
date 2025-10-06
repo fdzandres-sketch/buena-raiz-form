@@ -87,7 +87,7 @@
     <textarea id="comentarios" name="comentarios" rows="4"></textarea>
     
     <input type="hidden" id="lead_tag" name="lead_tag" />
-    
+        
 <div id="empresa" style="display:none;">
   <label for="empresa">Empresa:</label>
   <input type="text" name="empresa" />
@@ -125,19 +125,50 @@ document.addEventListener("DOMContentLoaded", function () {
   const categoryField = document.getElementById("categoria");
   const leadTagField = document.getElementById("lead_tag");
 
-  function updateLeadTag() {
-    const selected = categoryField.value;
-    leadTagField.value = selected ? selected.toLowerCase() : "";
+  function assignLeadTag() {
+    const selected = categoryField.value.trim().toLowerCase();
+
+    let tag = "";
+    switch (selected) {
+      case "prospecto comprador":
+        tag = "comprador";
+        break;
+      case "prospecto vendedor":
+        tag = "vendedor";
+        break;
+      case "prospecto arrendatario":
+        tag = "arrendatario";
+        break;
+      case "prospecto arrendador":
+        tag = "arrendador";
+        break;
+      case "broker":
+        tag = "broker";
+        break;
+      case "notario":
+        tag = "notario";
+        break;
+      case "gestor":
+        tag = "gestor";
+        break;
+      case "otros":
+        tag = "otros";
+        break;
+      default:
+        tag = "sin_categoria";
+    }
+
+    leadTagField.value = tag;
   }
 
-  categoryField.addEventListener("change", updateLeadTag);
-  updateLeadTag(); // Run once on page load
+  categoryField.addEventListener("change", assignLeadTag);
+  assignLeadTag(); // Run once on page load
 
-  // Ensure tagging just before submit
   document.getElementById("visitor-form").addEventListener("submit", function () {
-    updateLeadTag();
+    assignLeadTag(); // Ensure tagging before submission
   });
 });
 </script>
 </body>
 </html>
+
