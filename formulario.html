@@ -97,48 +97,61 @@
   </form>
 
   <script type="module">
-    console.log("Lead tag value:", data.lead_tag);
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-    const supabaseUrl = 'https://dtrxgnxkicpljqhkuazr.supabase.co'
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0cnhnbnhraWNwbGpxaGt1YXpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MzY1ODIsImV4cCI6MjA3NDQxMjU4Mn0.yp5yE7EAsIvtWnPdWyOBSPTkNb8MKJI0HEG9Luk0JB8'
+  const supabaseUrl = 'https://dtrxgnxkicpljqhkuazr.supabase.co'
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0cnhnbnhraWNwbGpxaGt1YXpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MzY1ODIsImV4cCI6MjA3NDQxMjU4Mn0.yp5yE7EAsIvtWnPdWyOBSPTkNb8MKJI0HEG9Luk0JB8'
 
-    const supabase = createClient(supabaseUrl, supabaseKey)
+  const supabase = createClient(supabaseUrl, supabaseKey)
 
-    document.getElementById('visitor-form').addEventListener('submit', async (e) => {
-      e.preventDefault()
-      const formData = new FormData(e.target)
-      const data = Object.fromEntries(formData.entries())
-      data.timestamp_utc = new Date().toISOString()
+  document.getElementById('visitor-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.timestamp_utc = new Date().toISOString();
 
-      const { error } = await supabase.from('visitors').insert([data])
-      if (error) {
-        alert('❌ Error: ' + error.message)
-      } else {
-        alert('✅ Gracias por tu información!')
-        e.target.reset()
-        window.location.href = 'index.html'
-      }
-    })
-  </script>
-<script>
-document.getElementById('visitor-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData.entries());
-  data.timestamp_utc = new Date().toISOString();
+    // ✅ Inline auto-tagging logic
+    const selectedCategory = document.getElementById("categoria").value.trim().toLowerCase();
+    switch (selectedCategory) {
+      case "prospecto comprador":
+        data.lead_tag = "comprador";
+        break;
+      case "prospecto vendedor":
+        data.lead_tag = "vendedor";
+        break;
+      case "prospecto arrendatario":
+        data.lead_tag = "arrendatario";
+        break;
+      case "prospecto arrendador":
+        data.lead_tag = "arrendador";
+        break;
+      case "broker":
+        data.lead_tag = "broker";
+        break;
+      case "notario":
+        data.lead_tag = "notario";
+        break;
+      case "gestor":
+        data.lead_tag = "gestor";
+        break;
+      case "otros":
+        data.lead_tag = "otros";
+        break;
+      default:
+        data.lead_tag = "sin_categoria";
+    }
 
-  console.log("Lead tag value:", data.lead_tag); // ✅ Debug line
+    console.log("Lead tag value:", data.lead_tag); // ✅ Debug line
 
-  const { error } = await supabase.from('visitors').insert([data]);
-  if (error) {
-    alert('❌ Error: ' + error.message);
-  } else {
-    alert('✅ Gracias por tu información!');
-    e.target.reset();
-    window.location.href = 'index.html';
-  }
-});
+    const { error } = await supabase.from('visitors').insert([data]);
+    if (error) {
+      alert('❌ Error: ' + error.message);
+    } else {
+      alert('✅ Gracias por tu información!');
+      e.target.reset();
+      window.location.href = 'index.html';
+    }
+  });
 </script>
 </body>
 </html>
