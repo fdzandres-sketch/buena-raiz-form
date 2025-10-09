@@ -16,4 +16,10 @@ class Visitor(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String)
     categoria = Column(String)
+    telefono_movil = Column(String)
     lead_tag = Column(String)
+    geo_location = Column(String)
+    price_history = Column(String)
+
+
+
