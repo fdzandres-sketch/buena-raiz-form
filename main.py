@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Oct  5 21:25:49 2025
-
-@author: DELL
-"""
-# main.py
 from fastapi import FastAPI, Form
 from models import Visitor, Base
 from sqlalchemy.orm import Session
@@ -36,4 +29,5 @@ def submit_form(
         )
         session.add(visitor)
         session.commit()
+
     return {"message": "Form submitted", "lead_tag": tag}
