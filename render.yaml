@@ -7,9 +7,10 @@ Created on Tue Oct  7 14:13:19 2025
 
 services:
   - type: web
-    name: buena-raiz-backend
+    name: buena-raiz-form
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     autoDeploy: true
+
     plan: free
