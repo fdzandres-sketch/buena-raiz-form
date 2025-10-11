@@ -35,3 +35,8 @@ def submit_form(
 def read_root():
     return {"message": "Buena Raiz backend is live!"}
 
+@app.get("/visitors")
+def get_visitors():
+    with Session(engine) as session:
+        results = session.query(Visitor).all()
+        return [v.__dict__ for v in results]
