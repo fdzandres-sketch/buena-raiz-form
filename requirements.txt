@@ -2,3 +2,5 @@ fastapi
 uvicorn
 sqlalchemy
 python-multipart
+psycopg2-binary
+
