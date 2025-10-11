@@ -31,3 +31,7 @@ def submit_form(
         session.commit()
 
     return {"message": "Form submitted", "lead_tag": tag}
+@app.get("/")
+def read_root():
+    return {"message": "Buena Raiz backend is live!"}
+
